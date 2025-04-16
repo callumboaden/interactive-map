@@ -1,0 +1,233 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Nunito", sans-serif;
+  background: #f8f8f8;
+  color: #1a1a1a;
+}
+
+/* Flex container for the whole page */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+p {
+  line-height: 1.5rem;
+}
+
+h1,
+p {
+  color: #1e215a;
+}
+
+#country-message {
+  margin: 0 auto;
+  max-width: 760px;
+}
+
+header {
+  padding-bottom: 1rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.tooltip {
+  position: absolute;
+  /* Size & Spacing */
+  padding: 8px 12px;
+  /* Colors & Fonts */
+  background-color: #1e215a; /* Navy-like color */
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  /* Styling */
+  border-radius: 6px;
+  /* Functionality */
+  pointer-events: none; /* lets cursor pass through */
+  white-space: nowrap;
+  z-index: 1000;
+  opacity: 0; /* for fade-in/out transitions */
+  transition: opacity 0.2s ease;
+}
+
+/* The arrow/pointer at the bottom center */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -6px; /* Position the arrow just below the tooltip box */
+  left: 50%; /* Center the arrow horizontally */
+  transform: translateX(-50%);
+  /* Arrow shape: a triangle pointing down */
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #1e215a;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+/* The container ensures a fixed aspect ratio */
+.map-container {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 0;
+  padding-bottom: 32%; /* Adjust this percentage to match your SVG's aspect ratio */
+}
+
+/* Position the object absolutely within the container */
+.map-container object {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none; /* Optional: Remove any default border */
+}
+
+/* fix for IE */
+object {
+  width: 100%;
+  height: 100%;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding-top: 1rem;
+}
+
+.legend img {
+  padding-right: 0.5rem;
+}
+
+.legend span {
+  display: flex;
+  align-items: center;
+  color: #1e215a;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.icon.safe {
+  background-color: #2abba7;
+}
+.icon.caution {
+  background-color: #f4c13d;
+}
+.icon.danger {
+  background-color: #e94b35;
+}
+
+.disclaimer {
+  margin: 0; /* remove default <p> margin if needed */
+}
+
+/* Style the icon if desired */
+.info-icon {
+  width: 20px; /* adjust size as needed */
+  height: 20px;
+  cursor: pointer; /* if you want it clickable */
+}
+
+/* Modal overlay styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* Hidden by default */
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  z-index: 1001;
+}
+
+/* Modal content box */
+.modal-content {
+  text-align: left;
+  background-color: #212758;
+  color: #fff;
+  padding: 20px 30px;
+  border-radius: 36px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #fff;
+}
+
+.modal-content h3 {
+  margin-bottom: 8px;
+}
+
+.modal-content h4 {
+  font-weight: normal;
+  margin-top: 0;
+}
+
+#modal-body.safe h3,
+#modal-body.safe h4 {
+  color: #2abba7;
+}
+
+#modal-body.caution h3,
+#modal-body.caution h4 {
+  color: #f4c13d;
+}
+
+#modal-body.danger h3,
+#modal-body.danger h4 {
+  color: #e94b35;
+}
+
+#modal-body p > :not(strong) {
+  opacity: 1;
+}
+
+#modal-body p,
+ul {
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* Modal close button */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.disclaimer {
+  font-size: 14px;
+}
+
+.disclaimer-extended a {
+  color: #fff;
+}

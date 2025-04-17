@@ -81,7 +81,7 @@ document.getElementById("world-map").addEventListener("load", function () {
 
     country.addEventListener("mousemove", (e) => {
       tooltip.style.left = `${e.pageX - 50}px`;
-      tooltip.style.top = `${e.pageY + 150}px`;
+      tooltip.style.top = `${e.pageY + 100}px`;
     });
 
     country.addEventListener("mouseleave", () => {

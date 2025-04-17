@@ -117,7 +117,7 @@ main {
   top: 0;
   width: 100%;
   height: 0;
-  padding-bottom: 32%; /* Adjust this percentage to match your SVG's aspect ratio */
+  padding-bottom: 29%; /* Adjust this percentage to match your SVG's aspect ratio */
 }
 
 /* Position the object absolutely within the container */
@@ -137,22 +137,24 @@ object {
 }
 
 .legend {
+  --legend-gap: clamp(0.5rem, 2vw, 2rem);
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem;
-  padding-top: 1rem;
+  gap: var(--legend-gap);
+  margin-top: var(--gap);
 }
-
-.legend img {
-  padding-right: 0.5rem;
-}
-
 .legend span {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  font-weight: 700;
   color: #1e215a;
-  font-weight: bold;
-  font-size: 1.2rem;
+  font-size: var(--step-0);
+}
+.legend img {
+  margin-right: 0.5rem;
+  width: 1.25em;
+  height: 1.25em;
 }
 
 .icon.safe {
@@ -429,6 +431,6 @@ ul {
 
 @media (min-width: 1601px) {
   .map-container {
-    padding-bottom: 35%;
+    padding-bottom: 29%;
   } /* 4 : 3 aspect for taller phones */
 }

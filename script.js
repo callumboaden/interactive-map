@@ -102,6 +102,7 @@ document.getElementById("world-map").addEventListener("load", function () {
     modalOverlay.style.display = "none";
     modalOpen = false;
     resetHeader();
+    highlight(null);
   };
   modalClose.addEventListener("click", closeModal);
   modalOverlay.addEventListener("click", (e) => {

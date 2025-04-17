@@ -1,3 +1,16 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const isMobileOrTablet =
+    window.innerWidth <= 1024 || "ontouchstart" in window;
+
+  if (isMobileOrTablet) {
+    const msgEl = document.getElementById("country-message");
+    if (msgEl) {
+      msgEl.textContent =
+        "To find out if you can drink the tap water in a specific country, tap it on the map or use the search box.";
+    }
+  }
+});
+
 /*******************************
  *  GLOBAL STATE + HELPERS     *
  *******************************/

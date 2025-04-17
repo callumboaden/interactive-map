@@ -24,23 +24,33 @@ document.getElementById("world-map").addEventListener("load", function () {
   const modalClose = document.getElementById("modal-close");
   const infoIcon = document.getElementById("info-icon");
 
+  // Tooltip + header elements
+  const tooltip = document.getElementById("tooltip");
+  const countryName = document.getElementById("country-name");
+  const countryMessage = document.getElementById("country-message");
+
+  // Store the initial header message so we can restore it later
+  const defaultMessageHTML = countryMessage.innerHTML;
+
+  // 👇 ADDED: track whether modal is open
+  let modalOpen = false;
+
+  // Helper to reset header
+  function resetHeader() {
+    countryName.innerText = "";
+    countryMessage.innerHTML = defaultMessageHTML;
+  }
+
   // Close modal function
   function closeModal() {
     modalOverlay.style.display = "none";
+    modalOpen = false; // 👈 ADDED: mark modal closed
+    resetHeader();
   }
   modalClose.addEventListener("click", closeModal);
   modalOverlay.addEventListener("click", (e) => {
     if (e.target === modalOverlay) closeModal();
   });
-
-  // Tooltip + header elements
-  const tooltip = document.getElementById("tooltip");
-  const countryHeader = document.getElementById("country-header");
-  const countryName = document.getElementById("country-name");
-  const countryMessage = document.getElementById("country-message");
-
-  // Store the initial header message so we can restore it on mouseleave
-  const defaultMessageHTML = countryMessage.innerHTML;
 
   // Select all paths in the SVG
   const allCountries = svgDoc.querySelectorAll("path");
@@ -77,15 +87,17 @@ document.getElementById("world-map").addEventListener("load", function () {
     country.addEventListener("mouseleave", () => {
       country.style.fill = ""; // Reset to original
 
-      // **RESET HEADER**: clear the country name and restore the default message
-      countryName.innerText = "";
-      countryMessage.innerHTML = defaultMessageHTML;
+      // 👇 ADDED: only reset header if modal is not open
+      if (!modalOpen) {
+        resetHeader();
+      }
 
       tooltip.style.opacity = "0";
       tooltip.style.display = "none";
     });
 
     country.addEventListener("click", () => {
+      modalOpen = true; // 👈 ADDED: mark modal open
       modalBody.className = category;
       modalBody.innerHTML = `
         <h2>${name}</h2>
@@ -96,6 +108,7 @@ document.getElementById("world-map").addEventListener("load", function () {
     });
 
     infoIcon.addEventListener("click", () => {
+      modalOpen = true; // 👈 ADDED: mark modal open
       modalBody.innerHTML = `${extendedDisclaimer}`;
       modalOverlay.style.display = "flex";
     });

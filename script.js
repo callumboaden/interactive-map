@@ -31,7 +31,7 @@ function highlight(id) {
   });
 }
 
-/** Mirror hover behaviour in the page header */
+/** Mirror hover / search behaviour in the page header */
 function updateHeader(id) {
   const data = countryData[id];
   if (!data) return;
@@ -40,10 +40,9 @@ function updateHeader(id) {
   const { message } = categories[category] || categories.unknown;
 
   document.getElementById("country-name").innerText = name;
-  document.getElementById("country-message").innerHTML = message.replace(
-    "[country name]",
-    name
-  );
+  document.getElementById("country-message").innerHTML =
+    message.replace("[country name]", name) +
+    `<br><strong id="more-info-link" data-id="${id}" style="cursor:pointer;">Click for more information</strong>`;
 }
 
 /*******************************
@@ -61,7 +60,7 @@ document.getElementById("world-map").addEventListener("load", function () {
     "http://www.w3.org/2000/svg",
     "style"
   );
-  styleEl.textContent = `.active{stroke:#1e1b4b;stroke-width:.8}`;
+  styleEl.textContent = `  path            { cursor: pointer; }    /* 👈 new rule */ .active{stroke:#1e1b4b;stroke-width:.8}`;
   mapDocument.documentElement.insertBefore(
     styleEl,
     mapDocument.documentElement.firstChild
@@ -78,6 +77,23 @@ document.getElementById("world-map").addEventListener("load", function () {
   const defaultMsgHTML = countryMsgEl.innerHTML;
 
   let modalOpen = false;
+
+  /* Open modal with detailed info for a given country id */
+  const openCountryModal = (id) => {
+    const data = countryData[id];
+    if (!data) return;
+
+    const { name, category } = data;
+    const { label, detailedMessage } =
+      categories[category] || categories.unknown;
+
+    modalOpen = true;
+    modalBody.className = category;
+    modalBody.innerHTML = `<h2>${name}</h2><h3>${label}</h3>${detailedMessage}`;
+    modalOverlay.style.display = "flex";
+    highlight(id); // keep it highlighted while modal is open
+  };
+
   const resetHeader = () => {
     countryNameEl.innerText = "";
     countryMsgEl.innerHTML = defaultMsgHTML;
@@ -92,6 +108,14 @@ document.getElementById("world-map").addEventListener("load", function () {
     if (e.target === modalOverlay) closeModal();
   });
 
+  /* Delegate clicks on the “more‑info‑link” (from hover OR search) */
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "more-info-link") {
+      const id = e.target.dataset.id;
+      if (id) openCountryModal(id);
+    }
+  });
+
   /* --- Hover & click listeners for each country path --- */
   const allCountries = mapDocument.querySelectorAll("path");
   allCountries.forEach((country) => {
@@ -99,40 +123,33 @@ document.getElementById("world-map").addEventListener("load", function () {
     if (!countryData[id]) return;
 
     const { name, category } = countryData[id];
-    const { label, color, message, detailedMessage } =
-      categories[category] || categories.unknown;
+    const { label, message } = categories[category] || categories.unknown;
     const formatted = message.replace("[country name]", name);
 
     country.addEventListener("mouseenter", () => {
-      highlight(id); // << lights up this country
+      highlight(id);
       countryNameEl.innerText = name;
-      countryMsgEl.innerHTML = `${formatted}<br><strong>Click for more information</strong>`;
+      countryMsgEl.innerHTML = `${formatted}<br><strong id="more-info-link" data-id="${id}" style="cursor:pointer;">Click for more information</strong>`;
       tooltip.innerText = label;
       tooltip.style.opacity = "1";
       tooltip.style.display = "block";
     });
 
     country.addEventListener("mousemove", (e) => {
-      tooltip.style.left = `${e.pageX - 50}px`;
-      tooltip.style.top = `${e.pageY + 100}px`;
+      tooltip.style.left = `${e.pageX - 20}px`;
+      tooltip.style.top = `${e.pageY + 150}px`;
     });
 
     country.addEventListener("mouseleave", () => {
       if (!modalOpen) {
-        highlight(null); // << clears the map
+        highlight(null);
         resetHeader();
       }
       tooltip.style.opacity = "0";
       tooltip.style.display = "none";
     });
 
-    country.addEventListener("click", () => {
-      modalOpen = true;
-      modalBody.className = category;
-      modalBody.innerHTML = `<h2>${name}</h2><h3>${label}</h3>${detailedMessage}`;
-      modalOverlay.style.display = "flex";
-      highlight(id); // highlight on click
-    });
+    country.addEventListener("click", () => openCountryModal(id));
   });
 
   /* Info‑icon modal */
@@ -162,7 +179,6 @@ document.getElementById("world-map").addEventListener("load", function () {
       return;
     }
 
-    // countryData → [id, obj] pairs so we keep the id
     const results = Object.entries(countryData)
       .filter(([, c]) => c.name.toLowerCase().startsWith(val))
       .sort((a, b) => a[1].name.localeCompare(b[1].name))
@@ -219,8 +235,8 @@ document.getElementById("world-map").addEventListener("load", function () {
   /* Apply hover‑style update for chosen id */
   function selectCountry(id, nameShown) {
     suggestionsEl.style.display = "none";
-    searchInput.value = nameShown; // keep chosen text in the box
-    highlight(id); // colour + stroke on the map
-    updateHeader(id); // header text identical to hover
+    searchInput.value = nameShown;
+    highlight(id);
+    updateHeader(id); // header now includes data-id and modal click works
   }
 });

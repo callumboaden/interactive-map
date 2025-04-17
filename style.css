@@ -1,20 +1,47 @@
+/* ------------------- */
+/*‑‑‑  GLOBAL RESET  ‑‑‑*/
+/* ------------------- */
 * {
   box-sizing: border-box;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 body {
   margin: 0;
-  padding: 0;
-  height: 100%;
   font-family: "Nunito", sans-serif;
   background: #f8f8f8;
   color: #1a1a1a;
+  display: flex; /* lays footer after content */
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
-/* Flex container for the whole page */
-body {
-  display: flex;
-  flex-direction: column;
+/* Fluid type & spacing helpers */
+:root {
+  --step--1: clamp(0.79rem, 0.77rem + 0.08vw, 0.88rem);
+  --step-0: clamp(0.99rem, 0.96rem + 0.13vw, 1.13rem);
+  --step-1: clamp(1.25rem, 1.2rem + 0.22vw, 1.44rem);
+  --step-2: clamp(1.56rem, 1.5rem + 0.35vw, 1.83rem);
+  --step-3: clamp(1.95rem, 1.87rem + 0.55vw, 2.34rem);
+  --step-4: clamp(2.44rem, 2.34rem + 0.84vw, 2.93rem);
+  --gap: clamp(1rem, 2vw, 2rem);
+}
+
+h1 {
+  font-size: var(--step-3);
+  margin: 1em 0 0.5em;
+}
+h2 {
+  font-size: var(--step-2);
+}
+h3 {
+  font-size: var(--step-1);
+}
+p,
+li {
+  font-size: var(--step-0);
+  line-height: 1.5;
 }
 
 h1 {
@@ -32,7 +59,7 @@ p {
 
 #country-message {
   margin: 0 auto;
-  max-width: 760px;
+  max-width: 900px;
 }
 
 header {
@@ -41,9 +68,9 @@ header {
 }
 
 main {
-  display: flex;
-  flex-direction: column;
   flex: 1;
+  text-align: center;
+  padding-inline: var(--gap);
 }
 
 .tooltip {
@@ -139,6 +166,7 @@ object {
 }
 
 .disclaimer {
+  padding-top: 5px;
   margin: 0; /* remove default <p> margin if needed */
 }
 
@@ -292,6 +320,7 @@ ul {
   right: 1rem;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.5rem;
 
   /* make sure it sits above the tooltip & map */
@@ -311,4 +340,95 @@ ul {
   flex-shrink: 0;
   stroke: currentColor;
   fill: none;
+}
+
+/* ------------------- */
+/*‑‑‑  BREAK‑POINTS   ‑‑‑*/
+/* ------------------- */
+
+/* === 1. MOBILE  (≤640 px) =============================== */
+@media (max-width: 640px) {
+  h1 {
+    font-size: var(--step-2);
+  }
+  .search-wrapper {
+    position: static; /* drop into normal flow */
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
+    margin-top: var(--gap);
+    justify-content: center;
+  }
+  .search-wrapper input {
+    width: 100%;
+  }
+  /*   .legend {
+    flex-direction: column;
+    align-items: flex-start;
+  } */
+  .map-container {
+    padding-bottom: 75%;
+  } /* 4 : 3 aspect for taller phones */
+}
+
+/* === 2. TABLET (641–1023 px) ============================ */
+@media (min-width: 641px) and (max-width: 1199px) {
+  .search-wrapper {
+    right: var(--gap);
+  }
+  /*   .map-container {
+    padding-bottom: 60%;
+  } */
+  .search-wrapper {
+    position: static; /* drop into normal flow */
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
+    margin-top: var(--gap);
+    justify-content: center;
+  }
+  .search-wrapper input {
+    width: 100%;
+  }
+  .map-container {
+    padding-bottom: 50%;
+  } /* 4 : 3 aspect for taller phones */
+}
+
+/* === 3. DESKTOP (≥1024 px) ============================== */
+@media (min-width: 1200px) and (max-width: 1400px) {
+  body {
+    font-size: 1.1rem;
+  }
+  .map-container {
+    max-width: 1100px;
+    margin-inline: auto;
+  }
+  .search-wrapper input {
+    width: 260px;
+  }
+  .map-container {
+    padding-bottom: 40%;
+  }
+}
+
+@media (min-width: 1401px) and (max-width: 1600px) {
+  body {
+    font-size: 1.1rem;
+  }
+  .map-container {
+    margin-inline: auto;
+  }
+  .search-wrapper input {
+    width: 260px;
+  }
+  .map-container {
+    padding-bottom: 29%;
+  } /* 4 : 3 aspect for taller phones */
+}
+
+@media (min-width: 1601px) {
+  .map-container {
+    padding-bottom: 35%;
+  } /* 4 : 3 aspect for taller phones */
 }

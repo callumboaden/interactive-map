@@ -212,12 +212,15 @@ document.getElementById("world-map").addEventListener("load", function () {
 
   /* Input typing */
   searchInput.addEventListener("input", (e) => showSuggestions(e.target.value));
+  searchInput.addEventListener("keyup", (e) => showSuggestions(e.target.value));
 
   /* Mouse click on a suggestion */
-  suggestionsEl.addEventListener("click", (e) => {
-    const li = e.target.closest("li[data-id]");
-    if (!li) return;
-    selectCountry(li.dataset.id, li.innerText);
+  ["click", "touchstart"].forEach((eventType) => {
+    suggestionsEl.addEventListener(eventType, (e) => {
+      const li = e.target.closest("li[data-id]");
+      if (!li) return;
+      selectCountry(li.dataset.id, li.innerText);
+    });
   });
 
   /* Keyboard navigation (↑ ↓ Enter) */
@@ -243,6 +246,12 @@ document.getElementById("world-map").addEventListener("load", function () {
     function setActive(i) {
       items.forEach((li) => li.classList.remove("active"));
       items[i].classList.add("active");
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !suggestionsEl.contains(e.target)) {
+      suggestionsEl.style.display = "none";
     }
   });
 

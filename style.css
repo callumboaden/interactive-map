@@ -371,10 +371,34 @@ ul {
   .map-container {
     padding-bottom: 75%;
   } /* 4 : 3 aspect for taller phones */
+
+  #searchSuggestions {
+    z-index: 1000;
+    position: absolute;
+    background: white;
+    max-height: 300px;
+    max-width: 260px;
+    overflow-y: auto;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 /* === 2. TABLET (641–1023 px) ============================ */
 @media (min-width: 641px) and (max-width: 1199px) {
+  #searchSuggestions {
+    z-index: 1000;
+    position: absolute;
+    background: white;
+    max-height: 300px;
+    max-width: 260px;
+    overflow-y: auto;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .search-wrapper {
     right: var(--gap);
   }

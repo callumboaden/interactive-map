@@ -33,8 +33,27 @@ const countryData = {
   CH: { name: "Switzerland", category: "safe" },
   GB: { name: "United Kingdom", category: "safe" },
   US: { name: "United States", category: "safe" },
+  GP: { name: "Guadeloupe", category: "safe" },
+  MQ: { name: "Martinique", category: "safe" },
+  IC: { name: "Canary Islands", category: "safe" },
+  PR: { name: "Puerto Rico", category: "safe" },
+  AW: { name: "Aruba", category: "safe" },
+  CW: { name: "Curaçao", category: "safe" },
+  BQ: { name: "Bonaire, Sint Eustatius and Saba", category: "safe" },
+  VG: { name: "British Virgin Islands", category: "safe" },
+  MS: { name: "Montserrat", category: "safe" },
+  FK: { name: "Falkland Islands", category: "safe" },
+  KY: { name: "Cayman Islands", category: "safe" },
+  AI: { name: "Anguilla", category: "safe" },
+  BL: { name: "Saint Barthélemy", category: "safe" },
+  NC: { name: "New Caledonia", category: "safe" },
+  PF: { name: "French Polynesia", category: "safe" },
+  MP: { name: "Northern Mariana Islands", category: "safe" },
+  GU: { name: "Guam", category: "safe" },
 
   // ⚠️ Caution
+  AS: { name: "American Samoa", category: "caution" },
+  GF: { name: "French Guiana", category: "caution" },
   AE: { name: "United Arab Emirates", category: "caution" },
   AF: { name: "Afghanistan", category: "caution" },
   AL: { name: "Albania", category: "caution" },
@@ -188,6 +207,8 @@ const countryData = {
   YE: { name: "Yemen", category: "caution" },
   ZM: { name: "Zambia", category: "caution" },
   ZW: { name: "Zimbabwe", category: "caution" },
+  RE: { name: "Réunion", category: "caution" },
+  TC: { name: "Turks and Caicos Islands", category: "caution" },
 
   // 🚫 Danger
   AF: { name: "Afghanistan", category: "danger" },
@@ -257,6 +278,11 @@ const countryData = {
   SB: { name: "Solomon Islands", category: "danger" },
   TV: { name: "Tuvalu", category: "danger" },
   VU: { name: "Vanuatu", category: "danger" },
+  YT: { name: "Mayotte", category: "danger" },
+  CV: { name: "Cape Verde", category: "danger" },
+  KM: { name: "Comoros", category: "danger" },
+  TL: { name: "Timor-Leste", category: "danger" },
+  SZ: { name: "Eswatini", category: "caution" },
 };
 
 const categories = {
